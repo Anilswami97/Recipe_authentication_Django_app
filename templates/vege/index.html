@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Vegetable{% endblock title %}
+
+{% block body %}
+        {% block form %}
+            <div class="container-fluid text-bg-dark py-3">
+                <div class="container mx-auto row border rounded border-2 pt-3">
+                    <div class="card border-0 col-lg-8 col-12 text-bg-dark py-4 my-2 order-last">
+                            <form action="/recipes/" method="post" enctype="multipart/form-data" class="card text-bg-dark border-0">
+                                {% csrf_token %}
+                                <h2>{% block formTag %}Add Recipes{% endblock formTag %}</h2>
+                                <hr>
+                                <div class="form-group my-2">
+                                    <label for="recipe-name" class="form-label">Recipe Name:</label>
+                                    <input type="text" name="recipe_name" class="form-control" id="recipe-name" placeholder="Enter Recipe name" required>
+                                </div>
+                                <div class="form-group my-2">
+                                    <label for="recipe-description" class="form-label">Description:</label>
+                                    <textarea name="recipe_des" class="form-control" id="recipe-description" rows="4" cols="50" placeholder="Description of Recipe" required></textarea>
+                                </div>
+                                <div class="form-group my-2">
+                                    <label for="recipe-image" class="form-label">Image:</label>
+                                    <input type="file" name="recipe_image" class="form-control" id="recipe-image">
+                                </div>
+                                <button type="submit" class="btn btn-secondary my-2">Submit</button>
+                            </form>
+                        </div>
+                    <div class="col-lg-4 col-12">
+                        <img src="{% static '/images/3.jpg' %}" class="order-first mx-auto d-block img-fluid mb-3 align-center rounded " alt="">
+                    </div>
+                </div>
+            </div>
+        {% endblock form %}
+
+
+    {% block recipe_table %}
+        <div class="text-bg-dark p-3 pt-5">
+            {% if recipes|length is 0 %}
+                    <h1 class="text-center">No Recipes Found!</h1>
+                    <h4 class="text-center">Please Add some!</h4>
+            {% else %}
+            <table class="table rounded table-hover align-middle caption-top table-dark">
+                <caption class="fs-2 mb-2 ps-2 fw-bold text-light text-center"><u>Recipes List</u></caption>
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Recipe Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Recipe Image</th>
+                        {% if request.user.is_authenticated %}
+                            <th scope="col">Action</th>
+                        {% endif %}                        
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for recipe in recipes %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{recipe.recipe_name}}</td>
+                        <td>{{recipe.recipe_description|truncatechars:300}}...<a href="#" class="text-decoration-none fw-bold">read more</a></td>
+                        <td class="text-end"><img src="/media/{{recipe.recipe_image}}" class="img-fluid rounded border border-2" style="width: 300px; height:auto" alt="recipe-image"></td>
+                        {% if request.user.is_authenticated %}
+                            <td>
+                                <a href="delrecipe/{{recipe.id}}/" class="btn btn-outline-danger mx-auto d-block">Delete</a>
+                                <a href="updaterecipe/{{recipe.id}}/" class="btn btn-outline-success my-2 mx-auto d-block">Update</a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            <hr>
+        </div>
+    {% endblock recipe_table %}
+{% endblock body %}
+

@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@429&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: #212529;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #0e1013;
+    z-index: 100;
+    backdrop-filter: blur(3px);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.466);
+}
+
+header {
+    margin-bottom: 4rem;
+}
+
+
+.navbar-brand {
+    color: aliceblue;
+    font-family: 'Inter', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    transition: 0.5s;
+}
+
+.navbar-brand i {
+    color: #0dbff0;
+    transition: 0.5s;
+}
+
+.navbar-brand:hover i {
+    color: #fff
+}
+
+.navbar-brand:hover {
+    color: #0dbff0;
+}
+
+
+.nav-item .nav-link {
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+.nav-item .nav-link:hover {
+    background-color: #1f7db014;
+
+}
+
+
+
+.navbar form input:focus,
+.navbar form input:active {
+    box-shadow: 0 0 6px 5px #07222977;
+    /* border: 1.8px solid #0dd5f0; */
+    border: 1.8px solid #198754;
+    background-color: #212529;
+    color: #fff;
+}
+
+.navbar form input::placeholder {
+    color: gray;
+}
+
+.navbar form input {
+    background-color: #212529bd;
+    border-radius: 2rem;
+    border: 1.8px solid rgb(177, 177, 177);
+}

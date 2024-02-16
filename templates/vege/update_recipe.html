@@ -1,0 +1,36 @@
+{% extends "vege/index.html" %}
+{% load static %}
+
+{% block form %}
+    <div class="container-fluid text-bg-dark py-4 vh-auto">
+        <div class="container mx-auto row align-items-center border rounded border-2 pt-3">
+            <div class="card border-0 col-lg-8 col-12 text-bg-dark py-1 my-2 order-last">
+                    <form action="/recipes/updaterecipe/{{recipe.id}}/" method="post" enctype="multipart/form-data" class="card text-bg-dark border-0">
+                        {% csrf_token %}
+                        <h2>Update Recipes</h2>
+                        <hr>
+                        <div class="form-group my-2">
+                            <label for="recipe-name" class="form-label" readonly>Recipe Name:</label>
+                            <input type="text" name="recipe_name" value="{{recipe.recipe_name}}" class="form-control" id="recipe-name" placeholder="Enter Recipe name">
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="recipe-description" class="form-label">Description:</label>
+                            <textarea name="recipe_des" class="form-control" id="recipe-description" rows="6" cols="50" placeholder="Description of Recipe">{{recipe.recipe_description}}</textarea>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="recipe-image" class="form-label">Image:</label>
+                            <input type="file" name="recipe_image" class="form-control" id="recipe-image" value="abs">
+                            <img src="/media/{{recipe.recipe_image}}" class="img-fluid my-2 rounded border border-2" style="width: 180px; height:auto" alt="recipe-image">
+                        </div>
+                        <button type="submit" class="btn btn-secondary my-2">Update Recipe</button>
+                    </form>
+                </div>
+            <div class="col-lg-4 col-12">
+                <img src="{% static '/images/3.jpg' %}" class="order-first mx-auto d-block img-fluid mb-3 align-center rounded " alt="">
+            </div>
+        </div>
+    </div>
+{% endblock form %}
+
+
+{% block recipe_table %}{% endblock recipe_table %}

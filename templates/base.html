@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!--Load the static files-->
+    {% load static %}
+
+    <!--Meta tags by bootstrap-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}{% endblock title %}</title>
+    
+    <!--Bootstrap in-build CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <!--Font Awesome link-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="{% static '/base/style.css' %}">
+    {% block style %}
+    {% endblock style %}
+  </head>
+  <body>
+    {% block navbar %}
+      <header class="py-2 bg-dark h-100">
+        <nav class="navbar navbar-expand-lg px-2">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="/">Re<i>cip</i>es .</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ms-2 me-auto mb-2 mb-lg-0">
+                <li class="nav-item px-3">
+                  <a class="nav-link" href="/recipes">Recipes</a>
+                </li>
+                {% if not request.user.is_authenticated %}
+                <li class="nav-item px-3">
+                  <a class="nav-link" href="/login">Login Now</a>
+                </li>
+                {% endif %}
+                <li class="nav-item px-3">
+                  <a class="nav-link" href="#">{{request.user.phone_number}}</a>
+                </li>
+              </ul>
+              <form class="d-flex align-items-center" role="search" action="/search" method="get">
+                  <div class="form-group me-2">
+                    <input class="form-control me-2 p-2 px-4" name="query" type="search" placeholder="Press 'Enter' to Search" aria-label="Search">
+                  </div>
+
+                {% if request.user.is_authenticated %}
+                    <div class="flex-shrink-0 dropdown">
+                      <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+                        <img src="{% static '/images/user.png' %}" alt="mdo" width="32" height="32" class="rounded-circle" style="filter:invert(1);">
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-dark text-small text-white shadow" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 34px, 0px);" data-popper-placement="bottom-end">
+                        <li><a class="dropdown-item" href="#">My Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Saved</a></li>
+                        <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+                        <li><hr class="dropdown-divider bg-danger"></li>
+                        <li><a class="dropdown-item text-danger" href="/logout/">Logout</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                {% else %}
+                  <div class="flex-shrink-0 dropdown">
+                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+                      <img src="{% static '/images/nouser.png' %}" alt="mdo" width="32" height="32" class="rounded-circle" style="filter:invert(1);">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small text-white shadow" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 34px, 0px);" data-popper-placement="bottom-end">
+                        <li><a class="dropdown-item" href="/register/">Register</a></li>
+                        <li><a class="dropdown-item" href="/login/">Login</a></li>
+                        <li><hr class="dropdown-divider bg-success"></li>
+                        <li><a class="dropdown-item text-success"  href="#">About</a></li>
+                    </ul>
+                  </div>
+                </div>
+                {% endif %}
+              </form>
+            </div>
+          </div>
+        </nav>
+    </header>
+    {% endblock navbar %}
+  {% block body %}{% endblock body %}
+    
+    
+    <!--Bootstrap in-build Javascript-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!--Custom Javascript-->
+    {% block script %}{% endblock script %}
+  </body>
+</html>

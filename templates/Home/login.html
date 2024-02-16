@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Login Now!{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static '/Home/forms/style.css' %}">
+{% endblock style %}
+
+{% block navbar %}{% endblock navbar %}
+{% block body %}
+    {% if messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+    
+
+    <a href="/" class="position-absolute bg-dark rounded-circle fs-6 text-white p-2 px-3 m-1" title="Home">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+
+    <div class="wrapper shadow-lg">
+        <div class="inner row">
+            <div class="image-holder">
+                <img src="{% static "/Home/images/3.jpg" %}" class="d-block mx-auto" alt="">
+            </div>
+
+            <form action="/login/" method="post" class="form">
+                {% csrf_token %}
+                <h3 class="fw-bold">{% block form_title %}Login Form{% endblock form_title %}</h3>
+                <div class="form-wrapper">
+                    <input type="phone" name="phone" placeholder="Phone number" class="form-control">
+                </div>
+                <div class="form-wrapper">
+                    <input type="password" name="password" placeholder="Password" class="form-control">
+                </div>
+                <div>Don't have an account?<a href="/register/" class="ms-2">Register</a></div>
+                <button type="submit" class="border-0 text-white bg-dark mx-auto p-0">Login</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock body %}
+

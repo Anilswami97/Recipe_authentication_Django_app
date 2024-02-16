@@ -1,0 +1,51 @@
+{% extends "vege/index.html" %}
+
+{% block body %}
+    <div class="container mt-5 py-5 row mx-auto">
+        <div class="p-5 bg-body-secondary rounded-3 shadow col-12 col-lg-12 mx-auto">
+            <div class="container-fluid py-2">          
+            {% if find %}
+            <h1 class="display-4 fw-bold">Recipes about "{{query}}"</h1>
+            {% else %}
+            <h1 class="display-5 fw-bold">No results about "{{query}}"</h1>  
+            {% endif %}
+            <p class="col-md-8 fs-5">Total <b><i>results</i></b> as per your request <b>{{recipes|length}}</b>.</p>
+            <a role="link" class="btn btn-dark btn-lg px-4" href="/recipes/" type="button">Go back</a>
+            </div>
+        </div>
+    </div>
+
+    {% if find %}
+        {% block recipe_table %}
+        <div class="text-bg-dark p-3 pt-5">
+            <table class="table rounded table-hover align-middle caption-top table-dark">
+                <caption class="fs-2 mb-2 ps-2 fw-bold text-light text-center"><u>Recipes List</u></caption>
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Recipe Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Recipe Image</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recipe in recipes %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{recipe.recipe_name}}</td>
+                        <td>{{recipe.recipe_description|truncatechars:300}}<a href="#" class="text-decoration-none mark">read more</a></td>
+                        <td class="text-end"><img src="/media/{{recipe.recipe_image}}" class="img-fluid rounded border border-2" style="width: 1000px; height:auto" alt="recipe-image"></td>
+                        <td>
+                            <a href="delrecipe/{{recipe.id}}/" class="btn btn-outline-danger mx-auto d-block">Delete</a>
+                            <a href="updaterecipe/{{recipe.id}}/" class="btn btn-outline-success my-2 mx-auto d-block">Update</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+        </div>
+        {% endblock recipe_table %}
+    {% endif %}
+{% endblock body %}
